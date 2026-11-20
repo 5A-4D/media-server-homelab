@@ -1,0 +1,26 @@
+# REFERENCE ONLY: replace documentation networks and interface names before use.
+# This complements the existing firewall; it is not a complete host ruleset.
+# It does not flush rules or replace Docker/Tailscale chains.
+define TRUSTED_LAN = 192.0.2.0/24
+define APPROVED_CLIENT = 198.51.100.20
+
+table inet media_access {
+    # Default reference Compose uses bridge publishing. Filter forwarded traffic.
+    chain forwarded_management {
+        type filter hook forward priority -5; policy accept;
+        ip saddr $TRUSTED_LAN oifname "br-media-stream" tcp dport 8096 accept
+        iifname "tailscale0" ip saddr $APPROVED_CLIENT oifname "br-media-stream" tcp dport 8096 accept
+        oifname "br-media-stream" tcp dport 8096 counter drop
+
+        iifname "tailscale0" ip saddr $APPROVED_CLIENT oifname "br-media-vpn" tcp dport 8080 accept
+        oifname "br-media-vpn" tcp dport 8080 counter drop
+    }
+    # Used only if Jellyfin is deliberately changed to host networking.
+    chain host_management {
+        type filter hook input priority 10; policy accept;
+        iifname "lo" tcp dport { 8096, 8080 } accept
+        ip saddr $TRUSTED_LAN tcp dport 8096 accept
+        iifname "tailscale0" ip saddr $APPROVED_CLIENT tcp dport { 8096, 8080 } accept
+        tcp dport { 8096, 8080 } counter drop
+    }
+}

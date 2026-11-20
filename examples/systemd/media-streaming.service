@@ -1,0 +1,18 @@
+[Unit]
+Description=Media homelab streaming stack (example paths)
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+RequiresMountsFor=/srv/example-media-data /opt/media-homelab/state
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/media-homelab
+ExecStart=/usr/bin/docker compose --env-file /opt/media-homelab/.env -f examples/compose.jellyfin.yaml up --detach
+ExecStop=/usr/bin/docker compose --env-file /opt/media-homelab/.env -f examples/compose.jellyfin.yaml down
+TimeoutStartSec=600
+TimeoutStopSec=120
+
+[Install]
+WantedBy=multi-user.target

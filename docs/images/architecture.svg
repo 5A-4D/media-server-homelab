@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" role="img" aria-labelledby="title description">
+<title id="title">Media Server Homelab — architecture and release boundaries</title>
+<desc id="description">Approved clients use Jellyfin over LAN or Tailscale. Jellyfin reads the library and has its own persistent state and selected GPU device. A separate qBittorrent client shares Gluetun's WireGuard network path. Only completed, inspected and approved files reach the library. The diagram contains no real host or account details.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7dd3fc"/></marker><marker id="gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#fbbf24"/></marker></defs>
+<style>text{font-family:DejaVu Sans,Arial,sans-serif}.title{font-size:42px;font-weight:700;fill:#f8fafc}.sub{font-size:20px;fill:#b7c8df}.lane{fill:#93c5fd;font-size:18px;font-weight:700;letter-spacing:2px}.heading{font-size:24px;font-weight:700;fill:#f1f5f9}.body{font-size:18px;fill:#c1d0e4}.small{font-size:15px;fill:#b7c8df}.label{font-size:15px;fill:#bae6fd;font-weight:700}</style>
+<rect width="1600" height="1260" rx="24" fill="#0b1220"/>
+
+<text x="60" y="75" class="title">Media Server Homelab</text>
+<text x="62" y="114" class="sub">Private playback · isolated downloads · individually verified releases</text>
+<rect x="1275" y="42" width="265" height="76" rx="18" fill="#132b2e" stroke="#2b6b67"/>
+<text x="1295" y="72" class="lane">LAN + TAILSCALE</text>
+<text x="1295" y="99" class="small">Approved clients only</text>
+<rect x="55" y="155" width="1490" height="290" rx="18" fill="#101e30" stroke="#28445d"/>
+<text x="82" y="196" class="lane">01  PLAYBACK PATH</text>
+<text x="82" y="223" class="small">Runs outside the commercial download VPN</text>
+<rect x="85" y="256" width="270" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="107" y="292" class="heading">Approved clients</text>
+<text x="107" y="324" class="body">TV app or browser</text>
+<text x="107" y="350" class="body">Trusted / private access</text>
+<rect x="435" y="256" width="300" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="457" y="292" class="heading">Jellyfin</text>
+<text x="457" y="324" class="body">Playback and indexing</text>
+<text x="457" y="350" class="body">Own config + cache</text>
+<rect x="835" y="256" width="320" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="857" y="292" class="heading">Media library</text>
+<text x="857" y="324" class="body">Movies · Shows · Music</text>
+<text x="857" y="350" class="body">Read-only service mounts</text>
+<rect x="1255" y="256" width="260" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="1277" y="292" class="heading">GPU access</text>
+<text x="1277" y="324" class="body">Selected render node</text>
+<text x="1277" y="350" class="body">Device + group access</text>
+<path d="M355,326 L430,326" fill="none" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="356.5" y="312" class="label">8096</text>
+<path d="M735,326 L830,326" fill="none" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="746.5" y="312" class="label">Read only</text>
+<path d="M585,395 V421 H1385 V395" fill="none" stroke="#61768f" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="790" y="415" class="small">Optional acceleration; actual transcode needs a session test</text>
+<rect x="55" y="480" width="1490" height="290" rx="18" fill="#101e30" stroke="#354362"/>
+<text x="82" y="521" class="lane">02  DOWNLOAD PATH</text>
+<text x="82" y="548" class="small">Downloader shares the gateway network namespace; no independent published ports</text>
+<rect x="85" y="578" width="300" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="107" y="614" class="heading">qBittorrent</text>
+<text x="107" y="646" class="body">Non-root client</text>
+<text x="107" y="672" class="body">Staging access only</text>
+<rect x="485" y="578" width="300" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="507" y="614" class="heading">Gluetun</text>
+<text x="507" y="646" class="body">Firewall + WireGuard</text>
+<text x="507" y="672" class="body">Private profile mount</text>
+<rect x="885" y="578" width="280" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="907" y="614" class="heading">VPN exit</text>
+<text x="907" y="646" class="body">Provider egress</text>
+<text x="907" y="672" class="body">DNS / IPv6 validation</text>
+<rect x="1265" y="578" width="250" height="138" rx="18" fill="#142238" stroke="#263c58"/>
+<text x="1287" y="614" class="heading">Content source</text>
+<text x="1287" y="646" class="body">Authorized content</text>
+<text x="1287" y="672" class="body">No source list stored</text>
+<path d="M385,648 L480,648" fill="none" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="396.5" y="634" class="label">Shared net</text>
+<path d="M785,648 L880,648" fill="none" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="796.5" y="634" class="label">Tunnel</text>
+<path d="M1165,648 L1260,648" fill="none" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="1176.5" y="634" class="label">Transfer</text>
+<text x="85" y="747" class="small">Management UI is a separate private path. Health alone does not prove a working kill switch.</text>
+<rect x="55" y="805" width="1490" height="315" rx="18" fill="#201e26" stroke="#665039"/>
+<text x="82" y="846" class="lane">03  CONTROLLED RELEASE</text>
+<text x="82" y="873" class="small">No automatic import from download completion</text>
+<rect x="85" y="902" width="300" height="138" rx="18" fill="#142238" stroke="#665039"/>
+<text x="107" y="938" class="heading">Staging</text>
+<text x="107" y="970" class="body">Incomplete stays put</text>
+<text x="107" y="996" class="body">Complete is a candidate</text>
+<rect x="485" y="902" width="490" height="138" rx="18" fill="#142238" stroke="#8b6b36"/>
+<text x="507" y="938" class="heading">Inspection + approval</text>
+<text x="507" y="970" class="body">Completion · type · streams · integrity</text>
+<text x="507" y="996" class="body">Sidecars · antivirus coverage · conflicts</text>
+<rect x="1095" y="902" width="420" height="138" rx="18" fill="#142238" stroke="#2f6a60"/>
+<text x="1117" y="938" class="heading">Library + Jellyfin</text>
+<text x="1117" y="970" class="body">Approved files and expected sidecars</text>
+<text x="1117" y="996" class="body">Verify destination and indexed path</text>
+<path d="M385,972 L480,972" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#gold)"/>
+<text x="396.5" y="958" class="label">Selected</text>
+<path d="M975,972 L1090,972" fill="none" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#gold)"/>
+<text x="996.5" y="958" class="label">Release</text>
+<text x="485" y="1080" class="body">Suspicious, incomplete or uncertain → hold outside the library</text>
+<text x="85" y="1090" class="small">Storage: noexec · nosuid · nodev</text>
+<rect x="55" y="1150" width="1490" height="74" rx="18" fill="#152338" stroke="#2b3d56"/>
+<text x="79" y="1181" class="lane">OPERATIONS</text>
+<text x="272" y="1181" class="body">Mount-aware startup · private administration · health · backup / restore · recovery</text>
+<text x="79" y="1207" class="small">Generalized portfolio architecture. All client identities, networks, accounts and library information are omitted.</text>
+</svg>

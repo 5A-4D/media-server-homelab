@@ -1,0 +1,10 @@
+{
+  "current_network_interface": "tun0",
+  "upnp": false,
+  "bypass_local_auth": false,
+  "bypass_auth_subnet_whitelist_enabled": false,
+  "web_ui_upnp": false,
+  "save_path": "/downloads/complete/",
+  "temp_path_enabled": true,
+  "temp_path": "/downloads/incomplete/"
+}

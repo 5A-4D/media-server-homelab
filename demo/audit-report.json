@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "mode": "fictional_demo",
+  "checks": [
+    {
+      "id": "streaming_running",
+      "description": "Streaming container is running",
+      "status": "pass"
+    },
+    {
+      "id": "streaming_healthy",
+      "description": "Streaming healthcheck is healthy",
+      "status": "pass"
+    },
+    {
+      "id": "downloader_running",
+      "description": "Download client is running",
+      "status": "pass"
+    },
+    {
+      "id": "gateway_running",
+      "description": "VPN gateway is running",
+      "status": "pass"
+    },
+    {
+      "id": "gateway_healthy",
+      "description": "VPN gateway healthcheck is healthy",
+      "status": "pass"
+    },
+    {
+      "id": "shared_vpn_namespace",
+      "description": "Downloader shares the VPN gateway network namespace",
+      "status": "pass"
+    },
+    {
+      "id": "downloader_ports_absent",
+      "description": "Downloader has no independent published ports",
+      "status": "pass"
+    },
+    {
+      "id": "media_read_only",
+      "description": "Media bind mounts are read-only inside the streamer",
+      "status": "pass"
+    },
+    {
+      "id": "staging_hidden_from_streamer",
+      "description": "Download staging is not mounted into the streamer",
+      "status": "pass"
+    },
+    {
+      "id": "library_hidden_from_downloader",
+      "description": "Downloader has no writable bind reaching media libraries",
+      "status": "pass"
+    },
+    {
+      "id": "data_mount_present",
+      "description": "A separate data mount is present",
+      "status": "pass"
+    },
+    {
+      "id": "noexec",
+      "description": "Data mount has noexec",
+      "status": "pass"
+    },
+    {
+      "id": "nosuid",
+      "description": "Data mount has nosuid",
+      "status": "pass"
+    },
+    {
+      "id": "nodev",
+      "description": "Data mount has nodev",
+      "status": "pass"
+    },
+    {
+      "id": "private_access_daemon_active",
+      "description": "Private-access daemon is active",
+      "status": "pass"
+    },
+    {
+      "id": "scanner_installed",
+      "description": "An antivirus scan client is installed",
+      "status": "pass"
+    },
+    {
+      "id": "firewall_and_client_access",
+      "description": "Effective firewall rules and allowed/denied client access",
+      "status": "not_checked"
+    },
+    {
+      "id": "vpn_binding_dns_ipv6",
+      "description": "Application interface binding, DNS path and IPv6 handling",
+      "status": "not_checked"
+    },
+    {
+      "id": "vpn_failure_and_recovery",
+      "description": "Controlled tunnel-failure, egress and recovery test",
+      "status": "not_checked"
+    },
+    {
+      "id": "media_integrity_and_scan",
+      "description": "Selected item completion, integrity and complete antivirus coverage",
+      "status": "not_checked"
+    },
+    {
+      "id": "playback_and_gpu",
+      "description": "Direct play, subtitles and actual GPU transcode session",
+      "status": "not_checked"
+    },
+    {
+      "id": "backup_restore_and_boot",
+      "description": "Consistent restore, reboot and power recovery",
+      "status": "not_checked"
+    }
+  ],
+  "counts": {
+    "pass": 16,
+    "fail": 0,
+    "not_checked": 6
+  },
+  "static_controls_passed": true,
+  "scope": "Snapshot only; manual checks remain. Not a certification of security or VPN privacy."
+}

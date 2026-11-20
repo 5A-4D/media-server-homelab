@@ -1,0 +1,45 @@
+name: homelab-streaming
+services:
+  jellyfin:
+    # Observed publication-baseline artifact, not a claim of latest/stable status.
+    image: jellyfin/jellyfin@sha256:357724bf0ae27a672c7cbaa899db2d9abeb13dbd8657ccce750258a4c059d037
+    container_name: media-streaming
+    user: "${JELLYFIN_UID:-10001}:${JELLYFIN_GID:-10001}"
+    group_add:
+      - "${MEDIA_GID:-10000}"
+    ports:
+      - "${JELLYFIN_BIND_ADDRESS:-127.0.0.1}:8096:8096/tcp"
+    volumes:
+      - type: bind
+        source: ${STATE_ROOT:-../state}/jellyfin/config
+        target: /config
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${STATE_ROOT:-../state}/jellyfin/cache
+        target: /cache
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${DATA_ROOT:-/srv/example-media-data}/media/movies
+        target: /media/movies
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${DATA_ROOT:-/srv/example-media-data}/media/shows
+        target: /media/shows
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${DATA_ROOT:-/srv/example-media-data}/media/music
+        target: /media/music
+        read_only: true
+        bind: {create_host_path: false}
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    networks: [stream_bridge]
+    restart: unless-stopped
+
+networks:
+  stream_bridge:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-media-stream

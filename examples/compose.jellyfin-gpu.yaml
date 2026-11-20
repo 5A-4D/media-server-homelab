@@ -1,0 +1,7 @@
+# Optional override: select the actual render node and its numeric group first.
+services:
+  jellyfin:
+    devices:
+      - "${RENDER_DEVICE:-/dev/dri/renderD128}:${RENDER_DEVICE:-/dev/dri/renderD128}"
+    group_add:
+      - "${RENDER_GID:-109}"

@@ -1,0 +1,18 @@
+{
+  "streaming_running": true,
+  "streaming_healthy": true,
+  "downloader_running": true,
+  "gateway_running": true,
+  "gateway_healthy": true,
+  "shared_vpn_namespace": true,
+  "downloader_ports_absent": true,
+  "media_read_only": true,
+  "staging_hidden_from_streamer": true,
+  "library_hidden_from_downloader": true,
+  "data_mount_present": true,
+  "noexec": true,
+  "nosuid": true,
+  "nodev": true,
+  "private_access_daemon_active": true,
+  "scanner_installed": true
+}
